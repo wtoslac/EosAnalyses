@@ -1,0 +1,47 @@
+/glg4debug/glg4param omit_muon_processes  0.0
+/glg4debug/glg4param omit_hadronic_processes  0.0 #not sure if theres a current benifit to leaving on
+
+# set the detector parameters
+/rat/db/set DETECTOR experiment "Eos"
+/rat/db/set DETECTOR geo_file "Eos/Eos.geo"
+#/rat/db/set GEO[eos_inner] material "wbls_1pct"
+/rat/db/set GEO[eos_inner] material "water"
+#/rat/db/set NOISEPROC noise_flag 1
+
+# Set cry variables for eos
+/rat/db/set CRY latitude 37.8715
+/rat/db/set CRY subboxLength 10
+# leaving electrons and pions on 
+/rat/db/set CRY returnNeutrons false
+/rat/db/set CRY returnGammas false
+/rat/db/set CRY returnProtons false
+
+/rat/physics/setCerenkovMaxNumPhotonsPerStep 273
+/rat/physics/enableCerenkov 1 #Turns Cherenkov light on or off; will have impacts on simulation speed
+
+/run/initialize
+/rat/physics/scintillation/on #Turns scintillation light on or off; will have impacts on simulation speed
+/tracking/storeTrajectory 1 #Tracks trajectory of muon
+
+##### BEGIN EVENT LOOP #####
+#/rat/proc simpledaq
+/rat/proc splitevdaq
+/rat/procset trigger_threshold 2.0
+#/rat/proc noise
+/rat/proc fitcentroid
+/rat/proc count
+/rat/procset update 1
+
+#/rat/proclast outroot Changing because it seems to not produce the output file I'm looking for
+/rat/proclast eosntuple
+/rat/procset include_tracking 1
+#END EVENT LOOP
+
+##### GENERATORS #################
+/generator/add combo cry:point #of form /generator/add vertexfile filename[:position]
+/generator/pos/set 0.0 0.0 2000.0 #Acts as a modifier to the generator. Each generator will treat this line differently
+									#In this case it moves the plane the particles are generated at up 2000 mm, the particles will
+									#still have randomly generated x-and y-positions
+##### RUN ###########
+/run/beamOn 1000
+
