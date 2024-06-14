@@ -31,6 +31,8 @@
 /rat/proc fitcentroid
 /rat/proc count
 /rat/procset update 1
+#/rat/proc prune
+#/rat/procset prune "mc.track:opticalphoton"
 
 #/rat/proclast outroot Changing because it seems to not produce the output file I'm looking for
 /rat/proclast eosntuple
@@ -43,5 +45,5 @@
 									#In this case it moves the plane the particles are generated at up 2000 mm, the particles will
 									#still have randomly generated x-and y-positions
 ##### RUN ###########
-/run/beamOn 1000
+/run/beamOn 100
 
