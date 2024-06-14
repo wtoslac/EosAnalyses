@@ -17,11 +17,15 @@
 /rat/db/set CRY returnProtons false
 
 /rat/physics/setCerenkovMaxNumPhotonsPerStep 273
-/rat/physics/enableCerenkov 1 #Turns Cherenkov light on or off; will have impacts on simulation speed
+/rat/physics/enableCerenkov 1 
+#Turns Cherenkov light on or off; will have impacts on simulation speed
+
 
 /run/initialize
-/rat/physics/scintillation/on #Turns scintillation light on or off; will have impacts on simulation speed
-/tracking/storeTrajectory 1 #Tracks trajectory of muon
+/rat/physics/scintillation/on 
+#Turns scintillation light on or off; will have impacts on simulation speed
+/tracking/storeTrajectory 1 
+#Tracks trajectory of muon
 
 ##### BEGIN EVENT LOOP #####
 #/rat/proc simpledaq
@@ -40,10 +44,13 @@
 #END EVENT LOOP
 
 ##### GENERATORS #################
-/generator/add combo cry:point #of form /generator/add vertexfile filename[:position]
-/generator/pos/set 0.0 0.0 2000.0 #Acts as a modifier to the generator. Each generator will treat this line differently
-									#In this case it moves the plane the particles are generated at up 2000 mm, the particles will
-									#still have randomly generated x-and y-positions
+/generator/add combo cry:point 
+#Adding the Cosmic Ray Generator as a point source
+/generator/pos/set 0.0 0.0 2000.0 
+#Acts as a modifier to the generator. Each generator will treat this line differently
+#In this case it moves the plane the particles are generated at up 2000 mm, 
+#the particles will still have randomly generated x-and y-position?? seems like we set it to 0,0 ~wing
+
 ##### RUN ###########
-/run/beamOn 100
+/run/beamOn 1000
 
