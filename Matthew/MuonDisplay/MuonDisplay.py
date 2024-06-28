@@ -9,14 +9,10 @@ import math
 import random
 import MUONPADDLESPECS
 
-#muonPanelPosition = [(0,0,0), (-203.2,0,0),(-406.4,0,0),(-610.8,0,0),(-814.4,0,0),(203.2,0,0), (406.4,0,0),(610.8,0,0),(814.4,0,0),(1018,0,0),(0,-1117.6,0), (-203.2,-1117.6,0),(-406.4,-1117.6,0),(-610.8,-1117.6,0),(-814.4,-1117.6,0),(203.2,-1117.6,0), (406.4,-1117.6,0),(610.8,-1117.6,0),(814.4,-1117.6,0),(1018,-1117.6,0),(0,0,0), (-203.2,0,0),(-406.4,0,0),(-610.8,0,0),(-814.4,0,0),(-610.8,0,0),(-814.4,0,0)] # Need to get actual position later on
-#muonTrigger = [(True,True),(False,False),(False,False),(False,False),(False,False),(False,False),(False,False),(False,False),(False,False),(False,False),(True,True),(False,False),(False,False),(False,False),(True,False),(False,False),(False,False),(False,False),(False,False),(False,False)] #WILL BE LOADED FROM DATA LATER
 muonTrigger = []
 muonPanelPosition = []
-# First 20 entires are the top paddles
-# Next 5 entires are bottoms paddles
-# Next 47 entires are barrel paddles
 
+# Temp function to generate fake data as there is no real data yet
 def fillRandom():
     for i in range(73):
         rand1 = random.randint(0,10)
@@ -76,12 +72,13 @@ class MuonVisual():
         #hits["top"].append(MuonPanel(86, 0,0,0,trigger=[True,False]))
         #hits["top"].append(MuonPanel(90, -203.2,0,0,trigger=[False,False]))
 
-        # Take the first 10 panels for the top of the detector
-        #print(muonPanelPosition[0:10])
+        # Sort each paddle into regions
+        print(muonPanelPosition[0:10])
         for pos, trig in zip(muonPanelPosition[0:9],muonTrigger[0:9]):
             hits["top"].append(MuonPanel(-1,pos[0],pos[1],pos[2],trigger=trig))
 
         # Next 10 for the second top portion of the detector
+        print(muonPanelPosition[10:20])
         for pos, trig in zip(muonPanelPosition[10:19], muonTrigger[10:19]):
             hits["top2"].append(MuonPanel(-1,pos[0],pos[1],pos[2],trigger=trig))
 
@@ -96,7 +93,7 @@ class MuonVisual():
         return hits
     def plot(self, muonHits:dict[list:MuonPanel], figpath = None):
 
-        plt.figure(figsize=(10,10),facecolor="black")
+        plt.figure(figsize=(10,10))
         # topPaddlePlot = plt.subplot(3,2,(2,3))
         # BrlPlot = plt.subplot(3,2,(3,4))
         # BtmPlot = plt.subplot(3,2,(3,4))
@@ -119,6 +116,7 @@ class MuonVisual():
                     bits = (0,1)
 
                 #print(bits)
+                print(x,y)
 
                 if muonHits["top"][x].slats[bits[0]].triggered and muonHits["top2"][y].slats[bits[1]].triggered:
                     #topPlt.scatter(x,y,s=100,c="r")
@@ -126,24 +124,28 @@ class MuonVisual():
                 else:
                     #topPlt.scatter(x,y,s=10, c="b")
                     topPlt.add_patch(Rectangle([x*MUONPADDLESPECS.muonPaddleWidth,y*MUONPADDLESPECS.muonPaddleWidth], width=MUONPADDLESPECS.muonPaddleWidth, height=MUONPADDLESPECS.muonPaddleWidth, color="b"))
-    
-        brlPlot = plt.subplot(3,1,2)
+                if x == 8:
+                    topPlt.text(x*MUONPADDLESPECS.muonPaddleWidth, y*MUONPADDLESPECS.muonPaddleWidth,list(MUONPADDLESPECS.muonIdIndex.keys())[list(MUONPADDLESPECS.muonIdIndex.values()).index(y)], color="black")
 
+        brlPlot = plt.subplot(3,1,2)
+        #print(list(MUONPADDLESPECS.muonIdIndex.values()))
         for x in range(41):
             for y in range(2):
                 #print(x,y)
+
+                theta = 360*(x*MUONPADDLESPECS.muonPaddleWidth)/2*math.pi*1731
                 if muonHits["brl"][x].slats[y].triggered:
                     #brlPlot = plt.scatter(x,y,s=100,c="r")
+
                     brlPlot.add_patch(Rectangle([x*MUONPADDLESPECS.muonPaddleWidth,y*MUONPADDLESPECS.muonPaddleLength/2], width=MUONPADDLESPECS.muonPaddleWidth, height=MUONPADDLESPECS.muonPaddleLength/2, color="r"))
                 else:
                     #brlPlot = plt.scatter(x,y,s=10,c="b")
                     brlPlot.add_patch(Rectangle([x*MUONPADDLESPECS.muonPaddleWidth,y*MUONPADDLESPECS.muonPaddleLength/2], width=MUONPADDLESPECS.muonPaddleWidth, height=MUONPADDLESPECS.muonPaddleLength/2, color="b"))
             #brlPlot.text(x*MUONPADDLESPECS.muonPaddleWidth,y*MUONPADDLESPECS.muonSlat1Length, list(MUONPADDLESPECS.muonIdIndex.keys())[list(MUONPADDLESPECS.muonIdIndex.values()).index(x+31)])
-
+        
+            brlPlot.text(x*MUONPADDLESPECS.muonSlat1Width,y, list(MUONPADDLESPECS.muonIdIndex.keys())[list(MUONPADDLESPECS.muonIdIndex.values()).index(x+31)], color="white")
         btmPlot = plt.subplot(3,1,3)
 
-        # Why is range not working
-        # why do I have to do this
         for x in range(10):
             for y in [0,1]:
                 #print(x,y)
@@ -155,14 +157,14 @@ class MuonVisual():
                     #BtmPlot.add_patch(Rectangle([y,x], width=0.25, height=0.2))
                     #plt.scatter(y,x,s=10,c="b")
                     btmPlot.add_patch(Rectangle([y*MUONPADDLESPECS.muonSlat1Length,x*MUONPADDLESPECS.muonSlat1Width], width=MUONPADDLESPECS.muonSlat1Length, height=MUONPADDLESPECS.muonSlat1Width, color="b"))
-            btmPlot.text(y*MUONPADDLESPECS.muonPaddleLength,x*MUONPADDLESPECS.muonSlat1Width, list(MUONPADDLESPECS.muonIdIndex.keys())[list(MUONPADDLESPECS.muonIdIndex.values()).index(x+20)])
+            btmPlot.text(y*MUONPADDLESPECS.muonPaddleLength,x*MUONPADDLESPECS.muonSlat1Width, list(MUONPADDLESPECS.muonIdIndex.keys())[list(MUONPADDLESPECS.muonIdIndex.values()).index(x+20)], color="black")
 
 
         topPlt.set_xlim(0,2240)
         topPlt.set_ylim(0,2240)
         btmPlot.set_xlim(0,2240)
         btmPlot.set_ylim(0,2240)
-        brlPlot.set_xlim(0, 9541)
+        brlPlot.set_xlim(0, 8120)
         brlPlot.set_ylim(0, 2240)
         #topPaddlePlot.set_xlim(-2000,2000)
         #topPaddlePlot.set_ylim(-2000,2000)
