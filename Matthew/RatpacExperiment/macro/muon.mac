@@ -1,0 +1,5 @@
+/rat/db/set DETECTOR experiement "muonPaddle"
+/rat/db/set DETECTOR geo_file "/home/mpearson5/EOS/RatpacExperiment/ratdb/muonPaddle/muonPaddle.geo"
+
+/run/initialize
+
