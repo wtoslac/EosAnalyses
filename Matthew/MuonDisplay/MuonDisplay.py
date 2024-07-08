@@ -8,6 +8,9 @@ import argparse
 import math
 import random
 import MUONPADDLESPECS
+import logger
+
+LOGPATH = "MuonDisplay.log"
 
 muonTrigger = []
 muonPanelPosition = []
@@ -35,6 +38,7 @@ class MuonPanel():
     def __init__(self, id, posx, posy, posz, trigger=[False,False]) -> None:
         # Position of center
         # Position and dimensions are in mm
+        self.id = id
         self.pos = (posx,posy,posz)
         self.trigger = trigger
         self.width = MUONPADDLESPECS.muonPaddleWidth
@@ -43,12 +47,15 @@ class MuonPanel():
 
         self.slats = [MuonSlat(self.pos[0], self.pos[1]+self.length/4, self.pos[2], triggered=trigger[0]), MuonSlat(self.pos[0], self.pos[1]-self.length/4, self.pos[2], triggered=trigger[1])]
 
-    #def rotate(self, matrix, angle):
+    def __str__(self):
+        return "id: " + str(self.id)
 
 class MuonVisual():
 
     def __init__(self, filePath, outputPath, single) -> None:
 
+        self.log = logger.logger("MuonVisual", filepath=LOGPATH, verbose=True)
+        self.info("Creating MuonVisual Object")
         self.single = single
 
         self.rootFile = ROOT.TFile(filePath, "R")
@@ -69,27 +76,18 @@ class MuonVisual():
             "bot":[]
         }
 
-        #hits["top"].append(MuonPanel(86, 0,0,0,trigger=[True,False]))
-        #hits["top"].append(MuonPanel(90, -203.2,0,0,trigger=[False,False]))
+        for i in range(0,10):
+            hits["top"].append(MuonPanel(list(MUONPADDLESPECS.muonIdIndex.keys())[list(MUONPADDLESPECS.muonIdIndex.values()).index(i)], muonPanelPosition[i][0],muonPanelPosition[i][1],muonPanelPosition[i][2],trigger=muonTrigger[i]))
 
-        # Sort each paddle into regions
-        print(muonPanelPosition[0:10])
-        for pos, trig in zip(muonPanelPosition[0:9],muonTrigger[0:9]):
-            hits["top"].append(MuonPanel(-1,pos[0],pos[1],pos[2],trigger=trig))
+        for i in range(10,20):
+            hits["top2"].append(MuonPanel(list(MUONPADDLESPECS.muonIdIndex.keys())[list(MUONPADDLESPECS.muonIdIndex.values()).index(i)], muonPanelPosition[i][0],muonPanelPosition[i][1],muonPanelPosition[i][2],trigger=muonTrigger[i]))
 
-        # Next 10 for the second top portion of the detector
-        print(muonPanelPosition[10:20])
-        for pos, trig in zip(muonPanelPosition[10:19], muonTrigger[10:19]):
-            hits["top2"].append(MuonPanel(-1,pos[0],pos[1],pos[2],trigger=trig))
+        for i in range(20,31):
+            hits["bot"].append(MuonPanel(list(MUONPADDLESPECS.muonIdIndex.keys())[list(MUONPADDLESPECS.muonIdIndex.values()).index(i)], muonPanelPosition[i][0],muonPanelPosition[i][1],muonPanelPosition[i][2],trigger=muonTrigger[i]))
 
-        for pos, trig in zip(muonPanelPosition[20:30], muonTrigger[20:30]):
-            hits["bot"].append(MuonPanel(-1,pos[0],pos[1],pos[2], trigger=trig))
+        for i in range(31,72):
+            hits["brl"].append(MuonPanel(list(MUONPADDLESPECS.muonIdIndex.keys())[list(MUONPADDLESPECS.muonIdIndex.values()).index(i)], muonPanelPosition[i][0],muonPanelPosition[i][1],muonPanelPosition[i][2],trigger=muonTrigger[i]))
         
-        for pos, trig in zip(muonPanelPosition[31:72], muonTrigger[31:72]):
-            hits["brl"].append(MuonPanel(-1,pos[0],pos[1],pos[2],trigger=trig))
-
-        #print(hits)
-
         return hits
     def plot(self, muonHits:dict[list:MuonPanel], figpath = None):
 
@@ -104,8 +102,8 @@ class MuonVisual():
         ax = fig.gca()
 
         # Plot for the top muon paddles
-        for x in range(9):
-            for y in range(9):
+        for x in range(0,10):
+            for y in range(0,10):
                 if x<4 and y <4:
                     bits = (1,0)
                 elif x<4 and y>4:

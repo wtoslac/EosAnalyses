@@ -11,12 +11,13 @@ muonPaddleHeight = 101.6
 
 muonSlat1Width = 203.2
 muonSlat1Length = 1120
-muonSlat1Height = None
+muonSlat1Height = None # Go measure 
 
 muonSlat2Width = 203.2
 muonSlat2Length = 1120
-muonSlat2Height = None
+muonSlat2Height = None # Go measure
 
+# Relates the muon paddle ID to its index in muonPaddlePos arrays. Any negative numbers are placeholders 
 muonIdIndex = {
     # Top Paddles
     62:0,
