@@ -1,5 +1,19 @@
 /rat/db/set DETECTOR experiement "muonPaddle"
-/rat/db/set DETECTOR geo_file "/home/mpearson5/EOS/RatpacExperiment/ratdb/muonPaddle/muonPaddle.geo"
+/rat/db/set DETECTOR geo_file "muonPaddle/muonPaddle.geo"
+#/rat/db/load "PMTINFO.ratdb"
+# Already loaded
 
 /run/initialize
+/tracking/storeTrajectory 1
+/rat/proc simpledaq
+/rat/proc count
+/rat/procset update 1
 
+/rat/proc outroot
+/rat/procset file "muonTest.root"
+
+/generator/add combo gun:point:poisson
+/generator/vtx/set mu- 0.0 0.0 -1.0 500
+/generator/pos/set 0.0 0.0 300
+
+/run/beamOn 10
