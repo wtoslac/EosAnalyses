@@ -18,8 +18,8 @@
 	color: [100,0,0],
 	position: [0.0,0.0,0.0],
 	rotation: [0.0,0.0,0.0],
-	material: "stainless_steel"
-	size: [2415,90,218]
+	material: "aluminum"
+	size: [2415,218,90]
 }
 {
 	name: "GEO",
@@ -28,11 +28,24 @@
 	valid_end: [0,0],
 	mother: "paddle",
 	type: "box",
-	color: [100.0,0,0],
-	position: [0.0,0.0,38],
+	color: [0,0,100],
+	position: [-1115.0,0.0,-20.5],
 	rotation: [0.0,0.0,0.0],
 	material: "scintillator"
-	size: [1084,213,11]
+	size: [1300,213,11]
+}
+{
+	name: "GEO",
+	index: "slat2cover",
+	valid_begin: [0,0],
+	valid_end: [0,0],
+	mother: "paddle",
+	type: "box",
+	color: [0,0,100],
+	position: [-1015.0,0.0,-20.5],
+	rotation: [0.0,0.0,0.0],
+	material: "pvc"
+	size: [1400,213,11]
 }
 {
 	name: "GEO",
@@ -41,11 +54,24 @@
 	valid_end: [0,0],
 	mother: "paddle",
 	type: "box",
-	color: [100.0,0,0],
-	position: [1388.0,0.0,57.0],
+	color: [0,100,0],
+	position: [1288.0,0.0,54.5],
 	rotation: [0.0,0.0,0.0],
 	material: "scintillator"
-	size: [1027,213,11]
+	size: [1127,213,11]
+}
+{
+	name: "GEO",
+	index: "slat1cover",
+	valid_begin: [0,0],
+	valid_end: [0,0],
+	mother: "paddle",
+	type: "box",
+	color: [0,100,0],
+	position: [1188.0,0.0,54.5],
+	rotation: [0.0,0.0,0.0],
+	material: "polypropylene"
+	size: [1227,213,11]
 }
 {
 	name: "GEO",
@@ -53,6 +79,7 @@
 	valid_begin: [0,0],
 	mother: "paddle",
 	type: "pmtarray",
+	pmt_model: "lappd",
 	pos_table: "PMTINFO",
 	orientation: "manual",
 }
