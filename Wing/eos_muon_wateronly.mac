@@ -30,13 +30,13 @@
 ##### BEGIN EVENT LOOP #####
 #/rat/proc simpledaq
 /rat/proc splitevdaq
-/rat/procset trigger_threshold 2.0
+/rat/procset trigger_threshold 30.0
 #/rat/proc noise
 /rat/proc fitcentroid
 /rat/proc count
-/rat/procset update 1
-#/rat/proc prune
-#/rat/procset prune "mc.track:opticalphoton"
+/rat/procset update 100
+/rat/proc prune
+/rat/procset prune "mc.track:opticalphoton"
 
 #/rat/proclast outroot Changing because it seems to not produce the output file I'm looking for
 /rat/proclast eosntuple
@@ -52,5 +52,5 @@
 #the particles will still have randomly generated x-and y-position?? seems like we set it to 0,0 ~wing
 
 ##### RUN ###########
-/run/beamOn 1000
+/run/beamOn 10000
 
