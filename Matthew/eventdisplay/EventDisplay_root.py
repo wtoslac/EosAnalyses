@@ -64,7 +64,9 @@ class EosVisualizer():
         """
         count = 0
         for event_i in events:
+            print("Getting event" + str(event_i))
             self.tree.GetEvent(event_i)
+            print(self.tree.nhit)
             hitpos = self.pmtpos[list(self.tree.lcn)]
             charge = list(self.tree.charge)
             ncrossings = list(self.tree.ncrossings)
@@ -72,13 +74,14 @@ class EosVisualizer():
             if nhit_cut <= 6:
                 continue
             count += 1
-            print("HERE")
-            print(hitpos, charge, ncrossings)
+            #print("HERE")
+            #print(hitpos, charge, ncrossings)
         
             for hit, q, ncross in zip(hitpos, charge, ncrossings):
-                if ncross > 1:
-                    continue
+                #if ncross > 1: 
+                #    continue
                 # store hit pmt charge
+                # Fixed edge case where 0.9999999 != 1 and where the channel is dead - Matthew 
                 if (0.99 < hit[0] < 1) or (hit[0] == 1.0):
                     continue
                 if useCharge:
@@ -153,6 +156,7 @@ class EosVisualizer():
 
         # Display Canvas and axes
         fig = plt.figure(figsize=(20,27), facecolor='black')
+        fig.suptitle("Run:" + args.f.split("/")[-1].replace(".root", "") + " Event: " + str(args.single), color="white")
         top_ax = plt.subplot(3,2,(1,2))
         mid_ax = plt.subplot(3,2,(3,4))
         dic_hi_ax = plt.subplot(3,2,5)
@@ -210,7 +214,6 @@ class EosVisualizer():
             print("Plot saved to "+figpath)
 
         plt.gcf().set_dpi(36)
-        plt.title("Event: " + str(args.single))
         plt.show()
 
 
@@ -227,7 +230,7 @@ if __name__ == "__main__":
     except: pass
 
     EosViz = EosVisualizer(args.f)
-    figpath = os.path.join(plotdir, args.f.split("/")[-1].replace(".root", ".png"))
+    figpath = os.path.join(plotdir, args.f.split("/")[-1].replace(".root", "_event_" +  str(args.single)+ ".png"))
 
     if args.single:
         EosViz.plot_event(event=int(args.single), useCharge=args.useCharge, figpath=figpath)
