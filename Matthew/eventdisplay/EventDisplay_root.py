@@ -120,6 +120,7 @@ class EosVisualizer():
 
     def plot_event(self, event=-1, useCharge=True, figpath=None):
         """Display a single Eos event"""
+        self.event = event
         if event==-1: # pick random event
             events = [np.random.randint(self.tree.GetEntries())]
         else:
@@ -156,7 +157,7 @@ class EosVisualizer():
 
         # Display Canvas and axes
         fig = plt.figure(figsize=(20,27), facecolor='black')
-        fig.suptitle("Run:" + args.f.split("/")[-1].replace(".root", "") + " Event: " + str(args.single), color="white")
+        fig.suptitle("Run:" + args.f.split("/")[-1].replace(".root", "") + " Event: " + str(self.event), color="white")
         top_ax = plt.subplot(3,2,(1,2))
         mid_ax = plt.subplot(3,2,(3,4))
         dic_hi_ax = plt.subplot(3,2,5)
@@ -223,6 +224,7 @@ if __name__ == "__main__":
     parser.add_argument("-s", "--single", action="store", help="plot a specified event, default is to plot multiple")
     parser.add_argument("-c", "--useCharge", action="store_true", default=False, help="use charge? uses nhit if set to False")
     parser.add_argument("-e", "--events", type=int, default=-1, help="number of events to be overlayed, when plotting multiple events")
+    parser.add_argument("-l", "--list", action="store", help="path to file containing a list of events to plot")
     args = parser.parse_args()
     
     plotdir = "./EventDisplays/"
@@ -232,6 +234,18 @@ if __name__ == "__main__":
     EosViz = EosVisualizer(args.f)
     figpath = os.path.join(plotdir, args.f.split("/")[-1].replace(".root", "_event_" +  str(args.single)+ ".png"))
 
+    if args.list:
+        f = open(args.list, "r")
+        eventlist = []
+        data = f.read().splitlines()
+        for value in data:
+            eventlist.append(int(value))
+        f.close()
+
+        for event in eventlist:
+            figpath = os.path.join(plotdir, args.f.split("/")[-1].replace(".root", "_event_" +  str(event)+ ".png"))
+            EosViz.plot_event(event=event, useCharge=args.useCharge, figpath=figpath)
+        exit()
     if args.single:
         EosViz.plot_event(event=int(args.single), useCharge=args.useCharge, figpath=figpath)
     else:
