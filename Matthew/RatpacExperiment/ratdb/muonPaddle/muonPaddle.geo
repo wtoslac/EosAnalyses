@@ -83,7 +83,7 @@
 	color: [0,100,100],
 	position: [592.1,0.0,27.5],
 	rotation: [0.0,0.0,0.0],
-	material: "polypropylene",
+	material: "air",
 	size: [613.75,106.75,5.75]
 }
 {
