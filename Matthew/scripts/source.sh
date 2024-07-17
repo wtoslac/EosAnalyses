@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# JAVA
+export JAVA_HOME=/home/mpearson5/EOS/jdk1.7.0_80/
+export PATH="$JAVA_HOME/bin:$PATH"
+
 # From ratpac.sh
 export RATROOT=/home/mpearson5/EOS/ratpac-two/install
 export PATH=$RATROOT/bin:$PATH
