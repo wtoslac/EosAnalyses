@@ -1,0 +1,38 @@
+/rat/db/set DETECTOR experiement "muonPaddle"
+/rat/db/set DETECTOR geo_file "muonPaddle/muonPaddle.geo"
+/rat/db/set PMT[lappd] width 4.5
+/rat/db/set PMT[lappd] thick 4.25
+#/rat/db/load "PMTINFO.ratdb"
+# Already loaded
+
+/run/initialize
+/tracking/storeTrajectory 1
+/rat/proclast outntuple
+/rat/procset include_tracking 1
+#/rat/proc simpledaq
+/rat/proc splitevdaq
+/rat/procset trigger_threshold 1.0
+/rat/proc count
+/rat/procset update 10
+
+#/rat/proc outroot
+#/rat/procset file "muonTest2.root"
+#/tracking/FillPointCont true
+#/vis/open HepRepFile
+#/vis/heprep/setFileDir vis
+#/vis/scene/create
+#/vis/scene/add/volume
+#/vis/sceneHandler/attach
+#/vis/viewer/set/style s
+#/vis/scene/add/trajectories
+#/vis/scene/add/hits
+###
+#/rat/proc count
+#/rat/procset update 1
+
+/generator/add combo cry:point
+/generator/pos/set 0.0 0.0 100.0
+#/generator/add combo gun:point:poisson
+#/generator/vtx/set mu- 0.0 0.0 -1.0 500
+#/generator/pos/set 600.0 0.0 100
+/run/beamOn 1000
