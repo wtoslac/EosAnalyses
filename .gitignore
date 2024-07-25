@@ -1,12 +1,13 @@
 .ipynb_checkpoints/
 __pycache__/
 
-bin/*
+bin/
+src/*
 *.root
 *.log
 *.o
 *.heprep
 muonexperiment.sh
-install/*
-build/*
+install/
+build/
 Config.hh
