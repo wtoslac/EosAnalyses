@@ -35,4 +35,4 @@
 #/generator/add combo gun:point:poisson
 #/generator/vtx/set mu- 0.0 0.0 -1.0 500
 #/generator/pos/set 600.0 0.0 100
-/run/beamOn 10000
+/run/beamOn 100000

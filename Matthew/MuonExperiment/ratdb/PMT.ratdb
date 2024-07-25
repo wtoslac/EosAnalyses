@@ -417,7 +417,7 @@ dynode_height: 182.0, // mm
 
 																																		glass_thickness: 1.0, // mm
 
-																																		width: 10.5, //mm
+																																		width: 3.5, //mm
 																																		thick: 3.25, //mm
 
 																																		noise_rate: 0, // Hz

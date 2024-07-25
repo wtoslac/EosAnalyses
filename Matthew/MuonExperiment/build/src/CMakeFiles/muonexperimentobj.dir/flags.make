@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/g++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/mpearson5/EOS/ratpac-setup/local/include -I/home/mpearson5/EOS/ratpac-setup/local/include/Geant4 -I/home/mpearson5/EOS/ratpac/install/include -I/home/mpearson5/EOS/MuonExperiment/build/include -isystem /home/mpearson5/EOS/ratpac/install/include/stlplus
+CXX_INCLUDES = -I/home/mpearson5/Eos_env/ratpac-setup/local/include -I/home/mpearson5/Eos_env/ratpac-setup/local/include/Geant4 -I/home/mpearson5/Eos_env/ratpac-setup/ratpac/install/include -I/home/mpearson5/Eos_env/MuonExperiment/build/include -isystem /home/mpearson5/Eos_env/ratpac-setup/ratpac/install/include/stlplus
 
 CXX_FLAGS =   -std=c++17 -pipe -fsigned-char -pthread -O3 -DNDEBUG -fPIC -w -std=c++17
 

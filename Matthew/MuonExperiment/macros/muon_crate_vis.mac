@@ -1,10 +1,21 @@
 /rat/db/set DETECTOR experiement "muonPaddle"
-/rat/db/set DETECTOR geo_file "muonPaddle/muonPaddle.geo"
+/rat/db/set DETECTOR geo_file "muonPaddle/detector.geo"
 /rat/db/set PMT[lappd] width 110.0
 /rat/db/set PMT[lappd] thick 2.0
 #/rat/db/set DAQ[SplitEVDAQ] trigger_threshold 2.0
-#/rat/db/load "PMTINFO.ratdb"
-# Already loaded
+/rat/db/load muonPaddle/muonTop.geo
+/rat/db/load muonPaddle/muonBottom.geo
+#/rat/db/load muonPaddle/muonCrate_A.geo
+#/rat/db/set GEO[crate_A] rotation [0.0,0.0,90.0]
+#/rat/db/set GEO[crate_A] position [-80.0,80.0,0.0]
+#/rat/db/load muonPaddle/muonCrate_B.geo
+#/rat/db/set GEO[crate_B] rotation [0.0,0.0,90.0]
+#/rat/db/set GEO[crate_B] position [1290.5,80.0,0.0]
+#/rat/db/load muonPaddle/muonCrate_C.geo
+#/rat/db/set GEO[crate_C] position [603.5,-603.5,-100]
+#/rat/db/load muonPaddle/muonCrate_D.geo
+#/rat/db/set GEO[crate_D] position [603.5,767,-100]
+## Already loaded
 
 /run/initialize
 /tracking/storeTrajectory 1
@@ -23,7 +34,7 @@
 /vis/scene/add/volume
 /vis/sceneHandler/attach
 /vis/viewer/set/style s
-/vis/scene/add/trajectories
+#/vis/scene/add/trajectories
 /vis/scene/add/hits
 
 #/rat/proc count
