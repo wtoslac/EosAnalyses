@@ -1,5 +1,12 @@
 #!/bin/bash
 
+#HIGHFIVE
+export HighFive_DIR=/home/mpearson5/EOS/HighFive/build/install/
+
+#HDF5
+PATH=$PATH:/home/mpearson5/hdf5/HDF5-1.14.4.2-Linux/HDF_Group/HDF5/1.14.4.2/bin/
+LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/mpearson5/hdf5/HDF5-1.14.4.2-Linux/HDF_Group/HDF5/1.14.4.2/lib/
+
 # JAVA
 export JAVA_HOME=/home/mpearson5/EOS/jdk1.7.0_80/
 export PATH="$JAVA_HOME/bin:$PATH"
