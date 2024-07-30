@@ -1,20 +1,10 @@
 /rat/db/set DETECTOR experiement "muonPaddle"
 /rat/db/set DETECTOR geo_file "muonPaddle/detector.geo"
-/rat/db/set PMT[lappd] width 110.0
-/rat/db/set PMT[lappd] thick 2.0
+/rat/db/set PMT[lappd] width 4.5
+/rat/db/set PMT[lappd] thick 4.25
 #/rat/db/set DAQ[SplitEVDAQ] trigger_threshold 2.0
 /rat/db/load muonPaddle/muonTop.geo
 /rat/db/load muonPaddle/muonBottom.geo
-#/rat/db/load muonPaddle/muonCrate_A.geo
-#/rat/db/set GEO[crate_A] rotation [0.0,0.0,90.0]
-#/rat/db/set GEO[crate_A] position [-80.0,80.0,0.0]
-#/rat/db/load muonPaddle/muonCrate_B.geo
-#/rat/db/set GEO[crate_B] rotation [0.0,0.0,90.0]
-#/rat/db/set GEO[crate_B] position [1290.5,80.0,0.0]
-#/rat/db/load muonPaddle/muonCrate_C.geo
-#/rat/db/set GEO[crate_C] position [603.5,-603.5,-100]
-#/rat/db/load muonPaddle/muonCrate_D.geo
-#/rat/db/set GEO[crate_D] position [603.5,767,-100]
 ## Already loaded
 
 /run/initialize
@@ -41,7 +31,7 @@
 #/rat/procset update 1
 
 #/generator/add combo cry:point
-#/generator/pos/set 0.0 0.0 100.0
+#/generator/pos/set 0.0 0.0 2500.0
 /generator/add combo gun:point:poisson
 /generator/vtx/set mu- 0.0 0.0 -1.0 2000
 /generator/pos/set -600.0 0.0 100

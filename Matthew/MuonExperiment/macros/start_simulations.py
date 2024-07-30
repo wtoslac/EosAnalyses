@@ -34,4 +34,4 @@ if __name__ == "__main__":
     for simulation, macrofile, output in commands:
         rootFiles.append(output)
 
-    os.system("hadd " + args.o + args.name + ".root" + " " + " ".join(list(map(str,rootFiles))))
+    os.system("hadd -k -a -d " + args.o + args.name + ".root" + " " + " ".join(list(map(str,rootFiles))))
