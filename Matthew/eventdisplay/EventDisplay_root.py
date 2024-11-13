@@ -125,6 +125,7 @@ class EosVisualizer():
             events = [np.random.randint(self.tree.GetEntries())]
         else:
             events = [event]
+            
 
         hits, charges = self.sorthits(events, useCharge)
         self.plot(hits, charges, figpath)

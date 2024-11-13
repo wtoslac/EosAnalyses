@@ -8,6 +8,9 @@ import matplotlib
 import matplotlib.pyplot as plt
 import argparse
 import os
+import pmt_positions
+
+muonChannels = [254, 252, 253, 238, 237, 236]
 
 def xy_phi(x, y):
     """
@@ -47,6 +50,13 @@ class EosVisualizer():
         pmtx = list(meta.pmtX)
         pmty = list(meta.pmtY)
         pmtz = list(meta.pmtZ)
+        #pmtx = pmt_positions.x
+        #pmty = pmt_positions.y
+        #pmtz = pmt_positions.z
+        
+        self.pmt_map = dict(zip(meta.pmtId, meta.pmtChannel))
+        
+        print(self.pmt_map)
 
         # global rotation to let top PMT array lie horizontally
         self.pmtpos = rotate_pmtarray(np.stack((pmtx, pmty, pmtz), axis=1), np.pi/2.)
@@ -62,6 +72,12 @@ class EosVisualizer():
         """
         for event_i in events:
             self.tree.GetEvent(event_i)
+            
+            for pmt in self.tree.hitPMTID:
+              if self.pmt_map[pmt] in muonChannels:
+                print("Skipped")
+                continue
+              
             hitpos = self.pmtpos[list(self.tree.hitPMTID)]
             charge = list(self.tree.hitPMTCharge)
         
@@ -76,17 +92,18 @@ class EosVisualizer():
         charges = {"top":[],"side":[],"dic_hi":[],"dic_lo":[]}
 
         # PMT Arrays are delineated by PMT z-position
+        #print(self.pmt_charges.items())
         for hit, q in self.pmt_charges.items():
-            if hit[2]>900:
+            if 1300>hit[2]>900:
                 hits["top"].append(hit)
                 charges["top"].append(q)
             elif hit[2]> -700 and hit[2]<900:
                 hits["side"].append(hit)
                 charges["side"].append(q)
-            elif hit[2]< -700 and hit[2]> -1150:
+            elif hit[2]< -700 and hit[2]> -1300:
                 hits["dic_hi"].append(hit)
                 charges["dic_hi"].append(q)
-            elif hit[2]< -1150:
+            elif -1600<hit[2]< -1300:
                 hits["dic_lo"].append(hit)
                 charges["dic_lo"].append(q)
 
@@ -102,8 +119,11 @@ class EosVisualizer():
 
     def plot_event(self, event=-1, useCharge=True, figpath=None):
         """Display a single Eos event"""
+        self.event = event
         if event==-1: # pick random event
             events = [np.random.randint(self.tree.GetEntries())]
+        else:
+            events = [event]
 
         hits, charges = self.sorthits(events, useCharge)
         self.plot(hits, charges, figpath)
@@ -136,6 +156,7 @@ class EosVisualizer():
 
         # Display Canvas and axes
         fig = plt.figure(figsize=(20,27), facecolor='black')
+        fig.suptitle("Run:" + args.f.split("/")[-1].replace(".root","") + " Event: " + str(self.event), color="white")
         top_ax = plt.subplot(3,2,(1,2))
         mid_ax = plt.subplot(3,2,(3,4))
         dic_hi_ax = plt.subplot(3,2,5)
@@ -198,9 +219,10 @@ class EosVisualizer():
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("f", action="store", help="pass in ntuple file to plot")
-    parser.add_argument("-s", "--single", action="store_true", help="plot event display of single event. default is to plot multiple")
-    parser.add_argument("-c", "--useCharge", type=bool, default=True, help="use charge? uses nhit if set to False")
+    parser.add_argument("-s", "--single", action="store", help="plot a specified event, default is to plot multiple")
+    parser.add_argument("-c", "--useCharge", action="store_true", default=False, help="use charge? uses nhit if set to False")
     parser.add_argument("-e", "--events", type=int, default=-1, help="number of events to be overlayed, when plotting multiple events")
+    parser.add_argument("-l", "--list", action="store", help="path to file containing a list of events to plot")
     args = parser.parse_args()
     
     plotdir = "./EventDisplays/"
@@ -208,10 +230,22 @@ if __name__ == "__main__":
     except: pass
 
     EosViz = EosVisualizer(args.f)
-    figpath = os.path.join(plotdir, args.f.split("/")[-1].replace(".root", ".png"))
+    figpath = os.path.join(plotdir, args.f.split("/")[-1].replace(".root", "_event_" +  str(args.single)+ ".png"))
 
+    if args.list:
+        f = open(args.list, "r")
+        eventlist = []
+        data = f.read().splitlines()
+        for value in data:
+            eventlist.append(int(value))
+        f.close()
+
+        for event in eventlist:
+            figpath = os.path.join(plotdir, args.f.split("/")[-1].replace(".root", "_event_" +  str(event)+ ".png"))
+            EosViz.plot_event(event=event, useCharge=args.useCharge, figpath=figpath)
+        exit()
     if args.single:
-        EosViz.plot_event(useCharge=args.useCharge, figpath=figpath)
+        EosViz.plot_event(event=int(args.single), useCharge=args.useCharge, figpath=figpath)
     else:
         EosViz.plot_multiple(nEvents=args.events, useCharge=args.useCharge, figpath=figpath)
 
