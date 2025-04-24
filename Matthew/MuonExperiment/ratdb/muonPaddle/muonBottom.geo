@@ -21,7 +21,7 @@
 	mother: "muonBottom",
 	type: "box",
 	color: [100,0,0],
-	position: [0.0,-1270.0,0.0],
+	position: [0.0,1270.0,0.0],
 	rotation: [0.0,0.0,0.0],
 	material: "aluminum"
 	size: [1207,109,45]
@@ -206,7 +206,7 @@
 	mother: "muonBottom",
 	type: "box",
 	color: [100,0,0],
-	position: [0.0,-1016.0,0.0],
+	position: [0.0,1016.0,0.0],
 	rotation: [0.0,0.0,0.0],
 	material: "aluminum"
 	size: [1207,109,45]
@@ -391,7 +391,7 @@
 	mother: "muonBottom",
 	type: "box",
 	color: [100,0,0],
-	position: [0.0,-762.0,0.0],
+	position: [0.0,762.0,0.0],
 	rotation: [0.0,0.0,0.0],
 	material: "aluminum"
 	size: [1207,109,45]
@@ -576,7 +576,7 @@
 	mother: "muonBottom",
 	type: "box",
 	color: [100,0,0],
-	position: [0.0,-508.0,0.0],
+	position: [0.0,508.0,0.0],
 	rotation: [0.0,0.0,0.0],
 	material: "aluminum"
 	size: [1207,109,45]
@@ -761,7 +761,7 @@
 	mother: "muonBottom",
 	type: "box",
 	color: [100,0,0],
-	position: [0.0,-254.0,0.0],
+	position: [0.0,254.0,0.0],
 	rotation: [0.0,0.0,0.0],
 	material: "aluminum"
 	size: [1207,109,45]
@@ -1131,7 +1131,7 @@
 	mother: "muonBottom",
 	type: "box",
 	color: [100,0,0],
-	position: [0.0,254.0,0.0],
+	position: [0.0,-254.0,0.0],
 	rotation: [0.0,0.0,0.0],
 	material: "aluminum"
 	size: [1207,109,45]
@@ -1316,7 +1316,7 @@
 	mother: "muonBottom",
 	type: "box",
 	color: [100,0,0],
-	position: [0.0,508,0.0],
+	position: [0.0,-508.0,0.0],
 	rotation: [0.0,0.0,0.0],
 	material: "aluminum"
 	size: [1207,109,45]
@@ -1501,7 +1501,7 @@
 	mother: "muonBottom",
 	type: "box",
 	color: [100,0,0],
-	position: [0.0,762.0,0.0],
+	position: [0.0,-762.0,0.0],
 	rotation: [0.0,0.0,0.0],
 	material: "aluminum"
 	size: [1207,109,45]
@@ -1605,7 +1605,7 @@
 	mother: "paddle_96_slat1airgap",
 	type: "box",
 	color: [0,100,0],
-	position: [50.0,0.0,0],
+	position: [50.0,0.0,0.0],
 	rotation: [0.0,0.0,0.0],
 	material: "scintillator"
 	size: [563.5,106.5,5.5]
@@ -1686,7 +1686,7 @@
 	mother: "muonBottom",
 	type: "box",
 	color: [100,0,0],
-	position: [0.0,1016.0,0.0],
+	position: [0.0,-1016.0,0.0],
 	rotation: [0.0,0.0,0.0],
 	material: "aluminum"
 	size: [1207,109,45]
@@ -1871,7 +1871,7 @@
 	mother: "muonBottom",
 	type: "box",
 	color: [100,0,0],
-	position: [0.0,1270.0,0.0],
+	position: [0.0,-1270.0,0.0],
 	rotation: [0.0,0.0,0.0],
 	material: "aluminum"
 	size: [1207,109,45]
@@ -1897,7 +1897,7 @@
 	mother: "paddle_11_slat2airgap",
 	type: "box",
 	color: [0,100,0],
-	position: [50.0,0.0,0],
+	position: [50.0,0.0,0.0],
 	rotation: [0.0,0.0,0.0],
 	material: "scintillator"
 	size: [650.0,106.5,5.5]
@@ -1975,7 +1975,7 @@
 	mother: "paddle_11_slat1airgap",
 	type: "box",
 	color: [0,100,0],
-	position: [50.0,0.0,0],
+	position: [50.0,0.0,0.0],
 	rotation: [0.0,0.0,0.0],
 	material: "scintillator"
 	size: [563.5,106.5,5.5]

@@ -17,15 +17,15 @@
 
 #/rat/proc outroot
 #/rat/procset file "muonTest2.root"
-#/tracking/FillPointCont true
-#/vis/open HepRepFile
-#/vis/heprep/setFileDir vis
-#/vis/scene/create
-#/vis/scene/add/volume
-#/vis/sceneHandler/attach
-#/vis/viewer/set/style s
-#/vis/scene/add/trajectories
-#/vis/scene/add/hits
+/tracking/FillPointCont true
+/vis/open HepRepFile
+/vis/heprep/setFileDir vis
+/vis/scene/create
+/vis/scene/add/volume
+/vis/sceneHandler/attach
+/vis/viewer/set/style s
+/vis/scene/add/trajectories
+/vis/scene/add/hits
 ###
 #/rat/proc count
 #/rat/procset update 1
@@ -35,4 +35,4 @@
 #/generator/add combo gun:point:poisson
 #/generator/vtx/set mu- 0.0 0.0 -1.0 500
 #/generator/pos/set 600.0 0.0 100
-/run/beamOn 1000
+/run/beamOn 1
