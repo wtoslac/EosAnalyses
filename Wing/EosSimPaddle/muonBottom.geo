@@ -2058,7 +2058,8 @@
 	mother:"paddle_52_slat2lightguide",
 	//mother:"world",
 	type: "pmtarray",
-	pmt_model: "lappd",
+	//pmt_model: "lappd",
+	pmt_model: "r5946",
 	pos_table: "PMTINFO_muon_bottom",
 	orientation: "manual"
 }
@@ -2072,7 +2073,8 @@
 	mother:"paddle_307_slat2lightguide",
 	//mother:"world",
 	type: "pmtarray",
-	pmt_model: "lappd",
+	//pmt_model: "lappd",
+	pmt_model: "r5946",
 	pos_table: "PMTINFO_muon_bottom",
 	orientation: "manual"
 }
