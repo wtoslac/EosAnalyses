@@ -1,0 +1,55 @@
+# Run macro as: 'eos eos_xxxx.mac -o filename.ntuple.root'
+/glg4debug/glg4param omit_muon_processes  0.0
+/glg4debug/glg4param omit_hadronic_processes  1.0
+
+# Load the Eos geometry
+/rat/db/set DETECTOR experiment "Eos"
+/rat/db/set DETECTOR geo_file "Eos/Eos.geo"
+/rat/db/load Eos/MuonPaddles.geo
+
+# Set cry variables for eos
+/rat/db/set CRY latitude 37.8715
+/rat/db/set CRY subboxLength 5
+
+/control/getEnv EOSDATA
+/control/execute {EOSDATA}/macros/snippets/fitterPrelude.snippet
+
+# Change the material inside Eos to water
+/rat/db/set GEO[eos_inner] material "water"
+
+# Set global PMT dark rate to 20 kHz
+/rat/db/set NOISEPROC noise_flag 0
+/rat/db/set NOISEPROC default_noise_rate 20000
+
+/run/initialize
+
+# Simulate the dark noise
+/rat/proc noise
+
+# Simulate the DAQ and waveform digitization.
+/rat/proc splitevdaq
+/rat/procset trigger_threshold 4.0
+
+# Run the standard Eos WaveformAnalysis chain
+/control/getEnv EOSDATA
+/control/execute {EOSDATA}/macros/snippets/waveformAnalysis.snippet
+
+/rat/proc hitcleaning
+
+/control/execute {EOSDATA}/macros/snippets/fitter.snippet
+
+# Print the event count as the events are generated.
+/rat/proc count
+/rat/procset update 10
+
+# Different output file formats
+/rat/proc outroot
+/rat/proclast eosntuple
+
+/generator/add combo cry:point
+/generator/pos/set 0.0 0.0 2500.0
+
+##### RUN ###########
+# Run one event
+/run/beamOn 10000 
+
